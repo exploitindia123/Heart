@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💗 Dil Se Tumhare Liye</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  min-height:100vh;
+  background:radial-gradient(ellipse at center,#350827,#100313 60%,#020006);
+  color:white;
+  font-family:Georgia,serif;
+  overflow-x:hidden;
+}
+
+#stars{position:fixed;inset:0;overflow:hidden;pointer-events:none}
+.star{
+  position:absolute;color:#fff;
+  text-shadow:0 0 8px #ff55c8,0 0 18px #ff1493;
+  animation:twinkle var(--speed) infinite ease-in-out;
+}
+@keyframes twinkle{
+  0%,100%{opacity:.2;transform:scale(.7)}
+  50%{opacity:1;transform:scale(1.4)}
+}
+
+main{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;gap:17px;
+  padding:25px 14px;
+}
+
+h1{
+  font-size:clamp(23px,6vw,34px);
+  color:#ffb9e7;
+  text-shadow:0 0 12px #ff1493,0 0 30px #ff008c;
+  animation:shine 2s infinite alternate;
+}
+@keyframes shine{
+  to{text-shadow:0 0 25px #ff1493,0 0 45px #ff008c}
+}
+
+.sub{
+  font:11px Arial,sans-serif;
+  color:#e8a8d4;letter-spacing:4px;
+}
+
+.heart{
+  width:min(82vw,330px);
+  height:auto;
+  overflow:visible;
+  filter:drop-shadow(0 0 7px #ff35b8)
+         drop-shadow(0 0 20px #ff008c);
+  animation:beat 1.6s 8s infinite;
+}
+.outline{
+  fill:none;
+  stroke:#ff5bc8;
+  stroke-width:3.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:1000;
+  stroke-dashoffset:1000;
+  animation:draw 8s ease-in-out forwards;
+}
+@keyframes draw{
+  to{stroke-dashoffset:0}
+}
+@keyframes beat{
+  0%,100%{transform:scale(1)}
+  20%{transform:scale(1.06)}
+  40%{transform:scale(1)}
+  60%{transform:scale(1.035)}
+}
+
+.shayari{
+  max-width:440px;
+  padding:5px 8px;
+  font-size:clamp(16px,4.2vw,20px);
+  line-height:1.9;
+  color:#ffe4f5;
+  text-shadow:0 0 12px #ff35b8;
+}
+.shayari p{
+  opacity:0;
+  transform:translateY(12px);
+  animation:appear 1.2s forwards;
+}
+.shayari p:nth-child(1){animation-delay:9s;color:#ff9dde}
+.shayari p:nth-child(2){animation-delay:11s}
+.shayari p:nth-child(3){animation-delay:13s}
+.shayari p:nth-child(4){animation-delay:15s}
+.shayari p:nth-child(5){animation-delay:17s}
+
+@keyframes appear{
+  to{opacity:1;transform:translateY(0)}
+}
+
+.music-btn{
+  border:1px solid #ff80d2;
+  border-radius:30px;
+  background:linear-gradient(135deg,#97115e,#400d3a);
+  color:white;padding:12px 22px;
+  font-size:14px;
+  box-shadow:0 0 20px #ff168b66;
+  cursor:pointer;
+}
+.note{font:11px Arial,sans-serif;color:#c99ac6}
+
+.float{
+  position:fixed;bottom:-30px;
+  pointer-events:none;z-index:2;
+  animation:rise var(--duration) linear forwards;
+}
+@keyframes rise{
+  0%{opacity:0;transform:translateY(0) rotate(0)}
+  15%{opacity:1}
+  100%{opacity:0;transform:translateY(-110vh) rotate(40deg)}
+}
+</style>
+</head>
+
+<body>
+<div id="stars"></div>
+
+<main>
+  <h1>For Someone Special 💗</h1>
+  <div class="sub">MY HEART • MY FEELINGS</div>
+
+  <!-- Empty heart, drawn with a continuous line -->
+  <svg class="heart" viewBox="0 0 300 280"
+       xmlns="http://www.w3.org/2000/svg">
+    <path class="outline"
+      d="M150 252
+         C130 232 25 157 25 87
+         C25 20 105 5 150 67
+         C195 5 275 20 275 87
+         C275 157 170 232 150 252 Z"/>
+  </svg>
+
+  <div class="shayari">
+    <p>🌹 सिर्फ़ तुम्हारे लिए 🌹</p>
+    <p>तेरी मुस्कान से मेरी दुनिया सँवर जाती है,</p>
+    <p>तेरी एक झलक से हर उदासी बिखर जाती है।</p>
+    <p>तू साथ रहे तो हर लम्हा ख़ास लगे,</p>
+    <p>तेरे होने से ही मेरी दुनिया में बहार आती है। 💗</p>
+  </div>
+
+  <button class="music-btn" id="musicBtn">
+    🎵 Play Romantic Song
+  </button>
+  <div class="note">A little love, a thousand feelings ✨</div>
+</main>
+
+<audio id="song" src="song.mp3" autoplay loop preload="auto"></audio>
+
+<script>
+// Twinkling stars
+const stars=document.getElementById("stars");
+for(let i=0;i<140;i++){
+  const s=document.createElement("span");
+  s.className="star";
+  s.textContent=Math.random()>.8?"✦":".";
+  s.style.left=Math.random()*100+"%";
+  s.style.top=Math.random()*100+"%";
+  s.style.fontSize=(7+Math.random()*12)+"px";
+  s.style.setProperty("--speed",(1+Math.random()*3)+"s");
+  s.style.animationDelay=Math.random()*3+"s";
+  stars.appendChild(s);
+}
+
+// Floating hearts and sparkles
+function floating(){
+  const el=document.createElement("span");
+  el.className="float";
+  el.textContent=Math.random()>.35?"💗":"✨";
+  el.style.left=Math.random()*100+"vw";
+  el.style.fontSize=(13+Math.random()*15)+"px";
+  el.style.setProperty("--duration",(6+Math.random()*6)+"s");
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),12500);
+}
+setInterval(floating,450);
+
+// Attempt automatic playback
+const song=document.getElementById("song");
+const btn=document.getElementById("musicBtn");
+
+async function playMusic(){
+  try{
+    await song.play();
+    btn.textContent="⏸ Pause Music";
+  }catch(e){
+    btn.textContent="💗 Tap to Play Music";
+  }
+}
+playMusic();
+
+// A user tap can start music if autoplay is blocked.
+btn.addEventListener("click",async()=>{
+  if(song.paused){
+    await playMusic();
+  }else{
+    song.pause();
+    btn.textContent="🎵 Play Romantic Song";
+  }
+});
+
+// Retry when the page becomes visible.
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden && song.paused){
+    playMusic();
+  }
+});
+</script>
+</body>
+</html>
